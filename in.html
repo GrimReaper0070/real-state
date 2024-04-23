@@ -1,0 +1,75 @@
+
+<?php 
+session_start();
+include("config.php");
+$error="";
+$msg="";
+if(isset($_REQUEST['login']))
+{
+	$email=$_REQUEST['email'];
+	$pass=$_REQUEST['pass'];
+	
+	
+	if(!empty($email) && !empty($pass))
+	{
+		$sql = "SELECT * FROM user where uemail='$email' && upass='$pass'";
+		$result=mysqli_query($con, $sql);
+		$row=mysqli_fetch_array($result);
+		   if($row){
+			   
+				$_SESSION['uid']=$row['uid'];
+				$_SESSION['uemail']=$email;
+				header("location:index.php");
+				
+		   }
+		   else{
+			   $error = "<p class='alert alert-warning'>Login Not Successfully</p> ";
+		   }
+	}else{
+		$error = "<p class='alert alert-warning'>Please Fill all the fields</p>";
+	}
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form in HTML and CSS | Codehal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="css/layerslider.css">
+<link rel="stylesheet" type="text/css" href="css/color.css">
+<link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="fonts/flaticon/flaticon.css">
+</head>
+
+<body>
+ 
+    <section>
+    <form method="post">
+									<div class="form-group">
+                                        <label for="email">Email</label>
+										<input type="email"  name="email" class="form-control" >
+									</div>
+									<div class="form-group">
+                                        <label for="password">Password</label>
+										<input type="password" name="pass"  class="form-control" >
+									</div>
+									
+										<button class="btn btn-primary" name="login" value="Login" type="submit">Login</button>
+									
+								</form>
+    </section>
+ 
+
+    <script src="js/custom.js"></script>
+</body>
+
+</html>
